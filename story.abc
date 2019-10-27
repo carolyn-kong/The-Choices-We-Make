@@ -128,7 +128,7 @@
         
 @bad coconut
     *say 
-        You have chosen the less sustainable route. 
+        You have chosen the less sustainable route. Wouldn't you like to save some coconuts and save the shell for later? Let's try again.
     *then
         ->look up
 	    
@@ -188,15 +188,16 @@
 
 @go to the clearing
     *say
-        As you approach the clearing you find a water filtering system and notice that the land is very fertile here. You see where you planted your potato. Check back later to see if you can harvest it. 
+        As you approach the clearing you find a water filtering system and notice that the land is very fertile here. You see where you planted your potato. Check back later to see if you can harvest it. You go back to where you first woke up.
     *then
         -> go back
 	   
 @tarp
     *say
-        You've protected your home in a sustainable way. You earned 10 points. Now that your sleeping bag is fine, you go to the clearing.
+        You've protected your home in a sustainable way. You earned 10 points. Now that your sleeping bag is fine, you head back to where you first woke up.
     *then
-        ->go to the clearing
+        flag sleepingbag
+        ->go back
     
     
 @no potato
