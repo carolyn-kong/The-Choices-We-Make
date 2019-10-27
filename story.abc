@@ -1,0 +1,333 @@
+// SPECIAL SCENE: @start is a special scene that tells the framework to start your game at this scene. It can be anywhere in your file. If no @start scene is present, the framework will start with the first scene in the file.
+@start
+	*say
+		<audio src='https://s3.amazonaws.com/alexa-ml/sounds/ezra-test-sounds/original/ocean_wave.mp3'/>
+		You open your eyes and find yourself on an deserted island. Try as you might, you can't recall how you got there, but what you do know is that you can't escape. You get up and brush off the sand. You start examining your new surroundings. You can look left, look up, or look right.
+	*then
+	    clear boat
+	    clear ocean
+	    clear up
+	    clear sleepingbag
+	    clear potato
+	    
+        hear look left, left, go left, to the left {
+            -> look left
+        }
+        hear look up, up, go up {
+            if up {
+                ->look up no
+            }
+            -> look up
+        }
+        hear look right, right, go right, to the right {
+            -> look right
+        }
+  
+//////////////////////////////////////////////////////////////////////////////////////////////
+
+@look left
+	*say
+		 You see a wooden boat stuck on shore, broken beyond repair. Beyond that lies the ocean surrounding the island. Would you like to go to the boat or go to the ocean or go back?
+	*then
+		hear go to the boat, boat, the boat, head for the boat {
+		    if boat {
+                -> go to the boat no
+            } 
+            -> go to the boat
+        }
+        hear go to the ocean, ocean, the ocean, head for the ocean {
+            if ocean {
+                ->go to the ocean no
+            }
+            -> go to the ocean
+        }
+        hear go back, the back, back, head back {
+            -> go back
+        }
+@go to the boat no
+	*say
+		There used to be a boat, but you have already taken all the wood you can. You head back.
+    *then
+        -> go back
+        
+@go to the boat
+	*say
+		There is a wooden boat, broken beyond repair. You may be able to salvage some wood. What would you like to do? 
+    *then
+        flag boat
+        hear get wood, wood, pick up wood, salvage wood, salvage some wood {
+            -> get wood
+        }
+        hear go back, the back, back, head back {
+            -> go back
+        }
+
+@go to the ocean no
+	*say
+	[sfx Sea Waves-SoundBible.com-946156036-[AudioTrimmer.com].mp3]	You have already gazed over the ocean, and looking at the amount of water trapping you on the island makes you sad. Let's head back.
+    *then
+        -> go back
+
+@go to the ocean
+	*say
+		[sfx Sea Waves-SoundBible.com-946156036-[AudioTrimmer.com].mp3]You gaze out to the vast ocean, contemplating life, wondering how to live a sustainable existance on this island. You see a few fish swimming near by. What would you like to do?
+	*then
+	    flag ocean
+        hear fish, fishing, go fishing, try to fish, get fish, catch fish, grab fish {
+            -> try to fish
+        }
+        hear go back, the back, back, head back {
+            -> go back
+        }
+		
+@try to fish
+    *say
+        You try to grab a fish but they are too fast for you. Guess you'll have to find another food source.
+    *then
+        -> go back
+	
+@get wood
+    *say
+        You pick up the last salvageable bits of wood. What would you like to do next?
+    *then
+        hear go to the ocean, ocean, the ocean, head for the ocean {
+            if ocean {
+                ->go to the ocean no
+            }
+            -> go to the ocean
+        }
+        hear go back, the back, back, head back {
+            -> go back
+        }
+
+//////////////////////////////////////////////////////////////////////////////////////////////
+
+@look up no        
+    *say
+        You know there are no more coconuts above you. Get your head out of the clouds. Let's head back and find more resources.
+    *then
+        ->go back
+
+@look up
+	*say
+	    Above you, you see a tree full of coconuts and beautiful clear blue sky. You can either eat one coconut and save the shell or eat all the coconuts and discard the shells in the ocean. What would you like to do?
+	*then
+	    flag up
+	    hear eat one, one, save the shell, save shell, eat one coconut{
+	        -> good coconut
+	    }
+	    hear eat all, eat all the coconuts, throw shells away{
+            -> bad coconut
+	    }
+	    
+@good coconut
+    *say 
+        You have chosen the more sustainable route, therefore your sustainability levels have increased by 10 points.
+    *then
+	   ->go back
+        
+@bad coconut
+    *say 
+        You have chosen the less sustainable route. 
+    *then
+        ->look up
+	    
+//////////////////////////////////////////////////////////////////////////////////////////////
+	    
+@look right
+    *say
+        To your right is the forest. On the edge of the forest there is a sleeping bag and beyond that, there is a clearing. Would you like to go to the sleeping bag or go to the clearing?
+    *then 
+        hear sleeping bag, go to sleeping bag, use sleeping bag {
+            if sleepingbag {
+                ->sleeping bag no
+            }
+            ->sleeping bag
+        }
+        
+    	hear go to the clearing, clearing, go to clearing, head to the clearing, walk to the clearing {
+    	    if potato {
+    	        -> go to the clearing
+	        }
+    	    -> go to the clearing no potato
+    	}
+	    
+@sleeping bag no
+    *say
+        It is not time to nap yet. The sleeping bag won't run away. Let's go search around some more.
+    *then
+        -> go back
+	    
+@sleeping bag
+	*say
+		As you approach the sleeping bag you notice that it is getting cloudy and it might rain soon. Would you like to shelter the sleeping bag, go to the clearing, or go back?
+	*then
+    	hear shelter the sleeping bag, sleeping bag, shelter, cover the sleeping bag {
+    	    -> tarp
+    	}
+    	hear go to the clearing, clearing, go to clearing, head to the clearing, walk to the clearing {
+    	    if potato {
+    	        -> go to the clearing
+	        }
+    	    -> go to the clearing no potato
+    	}
+    	hear go back, back, head back{
+    	    -> go back
+	}
+	
+@go to the clearing no potato
+    *say
+        As you approach the clearing you find a water filtering system and notice that the land is very fertile here. This discovery of the water filtration system has raised your sustainability by five points. Would you like to plant the potato?
+    *then
+        hear yes, plant the potato {
+            -> planted potato
+        }
+        hear no, don't plant the potato {
+            -> no potato
+        }
+
+@go to the clearing
+    *say
+        As you approach the clearing you find a water filtering system and notice that the land is very fertile here. You see where you planted your potato. Check back later to see if you can harvest it. 
+    *then
+        -> go back
+	   
+@tarp
+    *say
+        You've protected your home in a sustainable way. You earned 10 points. Now that your sleeping bag is fine, you go to the clearing.
+    *then
+        ->go to the clearing
+    
+    
+@no potato
+    *say
+        That was not the most sustainable choice. What will you eat if you don't replant your potatoes? Let's try that again.
+    *then
+        -> go to the clearing
+        
+@planted potato
+    *say 
+        You planted the potato. You will have food for the future. You have earned 10 sustainability points. You go back to where you first woke up.
+    *then
+        flag potato
+        ->go back
+//////////////////////////////////////////////////////////////////////////////////////////////
+
+@go back
+    *say 
+        You start examining your surrounding, you can look up, left or right?
+    *then
+        hear look left, left, go left, to the left {
+            -> look left
+        }
+        hear look up , up, go up {
+            if up {
+                ->look up no
+            }
+            -> look up
+        }
+        hear look right, right, go right, to the right {
+            -> look right
+        }
+
+
+//@head home
+//	*say
+//		You rest a little longer at the lake and then head down the trail. To get to the parking lot faster than your thought you would and head to get a burger. The end.
+//	*then
+//		-> end
+
+//@continue
+//	*say
+//		You get up from the rock and start up the winding trail. Your legs ache but soon loosen up. You are high up enough that there isn't much tree coverage and the sun is beating down on you.
+//	*then
+		// The player can't make it to the peak if the player didn't bring enough water.
+//		if bottles <= 1 {
+//            -> peak fail
+//        }
+//        -> peak
+
+
+//@peak fail
+//	*say
+//		About half way up, you stop to drink some water and notice that there is not much left in your bottle. You drink the last bit and wish you had brought more water with you. It's still a pretty long way up to the top and the trail is completely exposed to the sun and wind. Just looking at the rest of the trail remaining makes your throat dry. You take stock of your situation and decide that you'd better call it a day. You head back to the lake and then down to the parking lot. You are parched and sad that you didn't make it to the top but glad that you didn't risk it. You hop in your car and head out to get a burger on your way back home. The end.
+//	*then
+//		-> end
+
+//@peak
+//	*say
+//		You stop for more granola and water frequently. Good thing you brought enough water. It is a grueling climb, much harder than your thought it would be when looking up from the lake. Eventually you start to get closer to the peak and your adrenalin starts to kick in. The air is great up here. Then you take your final step and you are standing on top of the peak and can see forever in all directions. You take a moment to soak it in and take some photos. It's quiet peaceful up there. Eventually, you decide to head down. It's a long trip down and your legs are shot but it was totally worth it. Finally, you make it to the parking lots and flop into your car. You are beat and ready for a burger. What a great day! The end.
+//	*then
+//		-> end
+
+// SPECIAL SCENE: "@global prepend" is a special scene and allows you to add content or instructions to the start of every scene set
+//@global prepend
+//    *show
+//        // add visuals to every scene
+//        template: 'default'
+//        background:'https://sfb-framework.s3.amazonaws.com/examples/images/alps.jpg'
+//        title: 'Skill Flow Builder'
+//        subtitle: ''
+//
+// SPECIAL SCENE: "@global append" is a special scene and allows you to add content or instructions to the end of every scene set
+//@global append
+//    *then
+//        // listen everywhere for a few helpful phrases
+//        hear start over, restart {
+//           // Tell the framework to restart from the beginning
+//           >> RESTART
+//        }
+//        hear repeat {
+//            // Tell the framework to repeat everything the player just heard. You can use >> REPROMPT which only plays the reprompt content
+//            >> REPEAT
+//        }
+//        hear help {
+//            -> help
+//        }
+//        hear go back {
+//            >> back
+//        }
+        // if the player hasn't heard the help message yet and says something the framework didn't catch, play the help message
+        if !helped {
+            hear * {
+                -> help
+            }
+        }
+
+// SPECIAL SCENE: @resume is a special scene that will play when the player comes back to the game after leaving
+@resume
+	*say
+		Welcome back to your hiking story. Would you like to pick up where you last left off?
+	*then
+		hear yes {
+            // Tell the framework to pick up where they last left off
+			>> RESUME
+		}
+		hear no {
+			>> RESTART
+		}
+
+// SPECIAL SCENE: @pause is a special scene that plays before the skill pauses
+@pause
+	*say
+		Thanks for playing. 
+	*then
+		>> PAUSE
+
+@end
+	*say
+		Thanks for playing. Would you like to start over or take a break?
+	*then
+		hear take a break {
+			>> END
+		}
+
+@help
+    *say
+        Here's the help menu. Make choices to navigate the story or you can tell me to start over or stop. Picking up where you left off. 
+    *then
+        // flag that player has heard this
+        flag helped
+
+        // go back to last scene.
+        >> BACK
